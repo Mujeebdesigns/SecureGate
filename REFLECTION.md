@@ -2,8 +2,8 @@
 
 **Name:** Mujeeb Qozeem  
 **Cohort:** Design to MVP Bootcamp  
-**Live URL:** https://secure-gate-demo.vercel.app  
-**GitHub Repo:** https://github.com/mujeebqozeem/SecureGate  
+**Live URL:** https://secure-gate-chi-woad.vercel.app  
+**GitHub Repo:** https://github.com/Mujeebdesigns/SecureGate  
 
 ---
 
