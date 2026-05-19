@@ -1,0 +1,41 @@
+@import "tailwindcss";
+@import "../../tokens/tokens.css";
+
+/* Base reset and global styles powered by design tokens */
+body {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--body-default-size);
+  line-height: var(--body-default-lh);
+  color: var(--text-primary);
+  background-color: var(--background-page);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Heading defaults */
+h1 {
+  font-size: var(--heading-h1-size);
+  line-height: var(--heading-h1-lh);
+  font-weight: var(--heading-h1-weight);
+}
+
+h2 {
+  font-size: var(--heading-h2-size);
+  line-height: var(--heading-h2-lh);
+  font-weight: var(--heading-h2-weight);
+}
+
+h3 {
+  font-size: var(--heading-h3-size);
+  line-height: var(--heading-h3-lh);
+  font-weight: var(--heading-h3-weight);
+}
+
+/* Label defaults */
+label {
+  font-size: var(--label-size);
+  line-height: var(--label-lh);
+  font-weight: var(--label-weight);
+  color: var(--text-primary);
+}
