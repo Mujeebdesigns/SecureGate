@@ -117,7 +117,13 @@ If we built everything all at once, a failure would be extremely hard to trace. 
 ### Q9 — Zawinski's Law
 > *Rate limiting wasn't in Next.js or NextAuth — you added it. What principle does this demonstrate?*
 
-**Zawinski's Law** states that programs expand to handle core systems security and operational integrity. It demonstrates that rate limiting is not a auxiliary feature; any public-facing API endpoint will inevitably face automated attacks, credential stuffing, and resource exhaustion. Security hardening is an essential core layer of any modern deployment.
+**Zawinski's Law** states: *"Every program attempts to expand until it can read mail. Those programs which cannot so expand are replaced by ones which can."* — It describes how software systems inevitably grow to absorb functionality far beyond their original scope.
+
+SecureGate demonstrates this perfectly. The initial spec was credentials-based authentication, but the system naturally expanded: email delivery via Resend required integrating a third-party SDK; protecting endpoints from brute-force required pulling in an external Redis store (Upstash); generating secure tokens required touching Node's `crypto` module; protecting routes required a middleware layer. Each feature felt like a necessary extension once the layer before it was working — exactly the expanding scope Zawinski described.
+
+Rate limiting specifically illustrates the *operational* dimension of this law: once you have a login endpoint, you inevitably need to defend it. A program that handles authentication *will* expand to handle rate limiting, or it will be replaced by one that does.
+
+*If ignored:* The system stays brittle at the edges — working correctly in development but collapsing under real-world attack traffic in production.
 
 ---
 

@@ -1,19 +1,17 @@
 import { NextResponse } from "next/server";
-import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { generateVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "@/lib/email";
+import { forgotPasswordSchema } from "@/lib/validators/password";
 
 export const dynamic = "force-dynamic";
 
-const schema = z.object({
-  email: z.string().email("Please enter a valid email address").toLowerCase().trim(),
-});
+// Reuse the shared forgotPasswordSchema — do not duplicate Zod schemas (AGENTS.md)
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const parsed = schema.safeParse(body);
+    const parsed = forgotPasswordSchema.safeParse(body);
 
     if (!parsed.success) {
       return NextResponse.json(
