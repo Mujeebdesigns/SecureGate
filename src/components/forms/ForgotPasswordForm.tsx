@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FormField from "@/components/ui/FormField";
 import SubmitButton from "@/components/ui/SubmitButton";
 import Link from "next/link";
+import { forgotPasswordSchema } from "@/lib/validators/password";
 
 export default function ForgotPasswordForm() {
   const [email, setEmail] = useState("");
@@ -11,6 +12,20 @@ export default function ForgotPasswordForm() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
   const [emailError, setEmailError] = useState("");
+
+  // Real-time email format validation — reuses the shared forgotPasswordSchema
+  useEffect(() => {
+    if (email) {
+      const parsed = forgotPasswordSchema.shape.email.safeParse(email);
+      if (!parsed.success) {
+        setEmailError(parsed.error.issues[0].message);
+      } else {
+        setEmailError("");
+      }
+    } else {
+      setEmailError("");
+    }
+  }, [email]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -97,18 +112,13 @@ export default function ForgotPasswordForm() {
         type="email"
         placeholder="you@example.com"
         value={email}
-        onChange={(e) => {
-          setEmail(e.target.value);
-          if (emailError) {
-            setEmailError("");
-          }
-        }}
+        onChange={(e) => setEmail(e.target.value)}
         error={emailError}
         disabled={isLoading}
         autoComplete="email"
       />
 
-      <SubmitButton isLoading={isLoading}>Send Reset Link</SubmitButton>
+      <SubmitButton isLoading={isLoading} disabled={!!emailError || !email}>Send Reset Link</SubmitButton>
 
       <p className="text-center" style={{ fontSize: "var(--body-small-size)", color: "var(--text-muted)" }}>
         Remember your password?{" "}
